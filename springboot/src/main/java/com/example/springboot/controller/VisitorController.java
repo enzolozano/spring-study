@@ -29,7 +29,7 @@ public class VisitorController {
         return visitorService.findAll();
     }
 
-    @Operation(description = "List the visitor by his ID")
+    @Operation(description = "Get the visitor by his ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returns the visitor"),
             @ApiResponse(responseCode = "404", description = "The visitor could not be found")
@@ -55,7 +55,7 @@ public class VisitorController {
         return visitorService.save(visitorDTO);
     }
 
-    @Operation(description = "Delete a visitor from database")
+    @Operation(description = "Delete a visitor from database by his ID")
     @DeleteMapping("/{id}")
     public void deleteVisitor(@PathVariable Long id) {
         visitorService.deleteById(id);

@@ -29,7 +29,7 @@ public class ResidentController {
         return residentService.findAll();
     }
 
-    @Operation(description = "List the resident by his ID")
+    @Operation(description = "Get the resident by his ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Returns the resident"),
             @ApiResponse(responseCode = "404", description = "The resident could not be found")
@@ -55,7 +55,7 @@ public class ResidentController {
         return residentService.save(residentDTO);
     }
 
-    @Operation(description = "Delete a resident from database")
+    @Operation(description = "Delete a resident from database by his ID")
     @DeleteMapping("/{id}")
     public void deleteResident(@PathVariable Long id) {
         residentService.deleteById(id);
