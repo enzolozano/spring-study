@@ -1,6 +1,7 @@
 package com.example.springboot.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,5 +21,6 @@ public class VisitorDTO implements Serializable {
     private Date createdAt;
     private Date lastVisit;
     private String observation;
+    @NotNull(message = "Last visited resident ID is required")
     private long lastVisitedResidentId;
 }
