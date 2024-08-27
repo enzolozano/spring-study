@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "resident")
-public class Resident implements Serializable {
+public class Resident {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,4 +46,8 @@ public class Resident implements Serializable {
     private int gender;
 
     private String photo;
+
+    @ManyToOne
+    @JoinColumn(name = "unity_id")
+    private Unity unity;
 }

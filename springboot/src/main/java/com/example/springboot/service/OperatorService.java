@@ -27,6 +27,10 @@ public class OperatorService {
         return operator.isPresent();
     }
 
+    public Optional<Operator> findEntityById(long id) {
+        return operatorRepository.findById(id);
+    }
+
     public List<OperatorDTO> findAll() {
         List<Operator> entities = operatorRepository.findAll();
 

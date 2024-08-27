@@ -6,14 +6,13 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "visitor")
-public class Visitor {
+@Table(name = "unity")
+public class Unity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,25 +20,25 @@ public class Visitor {
     private long id;
 
     @Column(nullable = false)
-    private String name;
+    private String description;
 
     @Column(nullable = false)
-    private String document;
+    private String block;
 
-    private String phoneNumber;
+    @Column(nullable = false)
+    private String lot;
+
+    private String observation;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
 
     @UpdateTimestamp
-    @Column(nullable = false, name = "last_visit")
-    private Date lastVisit;
-
-    private String observation;
+    @Column(nullable = false, name = "updated_at")
+    private Date updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "last_visited_resident_id")
-    private Resident lastVisitedResident;
-
+    @JoinColumn(nullable = false, name = "operator_id")
+    private Operator operator;
 }
