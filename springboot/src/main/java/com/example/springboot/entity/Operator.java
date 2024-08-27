@@ -6,14 +6,13 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "visitor")
-public class Visitor implements Serializable {
+@Table(name = "operator")
+public class Operator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,22 +23,16 @@ public class Visitor implements Serializable {
     private String name;
 
     @Column(nullable = false)
-    private String document;
+    private String password;
 
-    private String phoneNumber;
+    @Column(nullable = false)
+    private String email;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
 
     @UpdateTimestamp
-    @Column(nullable = false, name = "last_visit")
-    private Date lastVisit;
-
-    private String observation;
-
-    @ManyToOne
-    @JoinColumn(name = "last_visited_resident_id")
-    private Resident lastVisitedResident;
-
+    @Column(nullable = false, name = "updated_at")
+    private Date updatedAt;
 }

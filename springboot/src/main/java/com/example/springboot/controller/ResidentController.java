@@ -1,7 +1,6 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.dto.ResidentDTO;
-import com.example.springboot.exception.model.NotFoundException;
 import com.example.springboot.service.ResidentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/residents")
@@ -36,13 +34,7 @@ public class ResidentController {
     })
     @GetMapping("/{id}")
     public ResidentDTO getResidentById(@PathVariable Long id) {
-        Optional<ResidentDTO> residentDTO = residentService.findById(id);
-
-        if (residentDTO.isEmpty()) {
-            throw new NotFoundException(String.format("Resident with id %d not found", id));
-        }
-
-        return residentDTO.get();
+        return residentService.findById(id);
     }
 
     @Operation(description = "Create a new resident")

@@ -1,5 +1,8 @@
 package com.example.springboot.enumerator;
 
+import lombok.Getter;
+
+@Getter
 public enum Gender {
     MALE(0),
     FEMALE(1),
@@ -10,10 +13,6 @@ public enum Gender {
 
     Gender(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public static Gender fromInt(int value) {
