@@ -36,13 +36,7 @@ public class VehicleController {
     })
     @GetMapping("/{id}")
     public VehicleDTO getVehicleById(@PathVariable Long id) {
-        Optional<VehicleDTO> vehicleDTO = vehicleService.findById(id);
-
-        if (vehicleDTO.isEmpty()) {
-            throw new NotFoundException(String.format("Vehicle with id %d not found", id));
-        }
-
-        return vehicleDTO.get();
+        return vehicleService.findById(id);
     }
 
     @Operation(description = "Create a new vehicle")

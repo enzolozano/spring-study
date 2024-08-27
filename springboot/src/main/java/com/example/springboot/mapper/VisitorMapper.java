@@ -3,35 +3,43 @@ package com.example.springboot.mapper;
 import com.example.springboot.dto.VisitorDTO;
 import com.example.springboot.entity.Resident;
 import com.example.springboot.entity.Visitor;
+import org.springframework.stereotype.Component;
 
-public class VisitorMapper {
-
-    public static VisitorDTO toDTO(Visitor visitor) {
+@Component
+public class VisitorMapper implements CrudMapper<VisitorDTO, Visitor, Resident> {
+    @Override
+    public VisitorDTO toDTO(Visitor entity) {
         VisitorDTO dto = new VisitorDTO();
 
-        dto.setId(visitor.getId());
-        dto.setName(visitor.getName());
-        dto.setDocument(visitor.getDocument());
-        dto.setPhoneNumber(visitor.getPhoneNumber());
-        dto.setCreatedAt(visitor.getCreatedAt());
-        dto.setLastVisit(visitor.getLastVisit());
-        dto.setObservation(visitor.getObservation());
-        dto.setLastVisitedResidentId(visitor.getLastVisitedResident().getId());
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setDocument(entity.getDocument());
+        dto.setPhoneNumber(entity.getPhoneNumber());
+        dto.setCreatedAt(entity.getCreatedAt());
+        dto.setLastVisit(entity.getLastVisit());
+        dto.setObservation(entity.getObservation());
+        dto.setLastVisitedResidentId(entity.getLastVisitedResident().getId());
 
         return dto;
     }
 
-    public static Visitor toEntity(VisitorDTO visitorDTO, Resident visitedResident) {
+    @Override
+    public Visitor toEntity(VisitorDTO dto) {
+        return null;
+    }
+
+    @Override
+    public Visitor toEntity(VisitorDTO dto, Resident foreignEntity) {
         Visitor entity = new Visitor();
 
-        entity.setId(visitorDTO.getId());
-        entity.setName(visitorDTO.getName());
-        entity.setDocument(visitorDTO.getDocument());
-        entity.setPhoneNumber(visitorDTO.getPhoneNumber());
-        entity.setCreatedAt(visitorDTO.getCreatedAt());
-        entity.setLastVisit(visitorDTO.getLastVisit());
-        entity.setObservation(visitorDTO.getObservation());
-        entity.setLastVisitedResident(visitedResident);
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setDocument(dto.getDocument());
+        entity.setPhoneNumber(dto.getPhoneNumber());
+        entity.setCreatedAt(dto.getCreatedAt());
+        entity.setLastVisit(dto.getLastVisit());
+        entity.setObservation(dto.getObservation());
+        entity.setLastVisitedResident(foreignEntity);
 
         return entity;
     }

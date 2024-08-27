@@ -1,7 +1,6 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.dto.VisitorDTO;
-import com.example.springboot.exception.model.NotFoundException;
 import com.example.springboot.service.VisitorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/visitors")
@@ -36,13 +34,7 @@ public class VisitorController {
     })
     @GetMapping("/{id}")
     public VisitorDTO getVisitorById(@PathVariable Long id) {
-        Optional<VisitorDTO> visitorDTO = visitorService.findById(id);
-
-        if (visitorDTO.isEmpty()) {
-            throw new NotFoundException(String.format("Visitor with id %d not found", id));
-        }
-
-        return visitorDTO.get();
+        return visitorService.findById(id);
     }
 
     @Operation(description = "Create a new visitor")

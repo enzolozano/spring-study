@@ -20,27 +20,36 @@ public class VehicleService {
     private VehicleRepository vehicleRepository;
 
     @Autowired
+    private VehicleMapper vehicleMapper;
+
+    @Autowired
     private ResidentService residentService;
 
     public List<VehicleDTO> findAll() {
-        return vehicleRepository.findAll()
-                .stream()
-                .map(VehicleMapper::toDTO)
+        List<Vehicle> entities = vehicleRepository.findAll();
+
+        return entities.stream()
+                .map(entity -> vehicleMapper.toDTO(entity))
                 .collect(Collectors.toList());
     }
 
-    public Optional<VehicleDTO> findById(long id) {
-        return vehicleRepository.findById(id)
-                .map(VehicleMapper::toDTO);
+    public VehicleDTO findById(long id) {
+        Optional<Vehicle> entity = vehicleRepository.findById(id);
+
+        if (entity.isEmpty()) {
+            throw new NotFoundException(String.format("Vehicle with id %d not found", id));
+        }
+
+        return vehicleMapper.toDTO(entity.get());
     }
 
     public VehicleDTO save(VehicleDTO vehicleDTO) {
         Resident resident = residentService.findEntityById(vehicleDTO.getResidentOwnerId())
                 .orElseThrow(() -> new NotFoundException("Resident not found"));
 
-        Vehicle vehicle = VehicleMapper.toEntity(vehicleDTO, resident);
+        Vehicle vehicle = vehicleMapper.toEntity(vehicleDTO, resident);
 
-        return VehicleMapper.toDTO(vehicleRepository.save(vehicle));
+        return vehicleMapper.toDTO(vehicleRepository.save(vehicle));
     }
 
     public void deleteById(long id) {

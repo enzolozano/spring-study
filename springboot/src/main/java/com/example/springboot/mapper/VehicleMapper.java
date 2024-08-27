@@ -3,29 +3,40 @@ package com.example.springboot.mapper;
 import com.example.springboot.dto.VehicleDTO;
 import com.example.springboot.entity.Resident;
 import com.example.springboot.entity.Vehicle;
+import com.example.springboot.enumerator.VehicleType;
+import org.springframework.stereotype.Component;
 
-public class VehicleMapper {
-
-    public static VehicleDTO toDTO(Vehicle vehicle) {
+@Component
+public class VehicleMapper implements CrudMapper<VehicleDTO, Vehicle, Resident>  {
+    @Override
+    public VehicleDTO toDTO(Vehicle entity) {
         VehicleDTO dto = new VehicleDTO();
 
-        dto.setId(vehicle.getId());
-        dto.setPlate(vehicle.getPlate());
-        dto.setColor(vehicle.getColor());
-        dto.setModel(vehicle.getModel());
-        dto.setResidentOwnerId(vehicle.getResidentOwner().getId());
+        dto.setId(entity.getId());
+        dto.setPlate(entity.getPlate());
+        dto.setColor(entity.getColor());
+        dto.setModel(entity.getModel());
+        dto.setType(VehicleType.fromInt(entity.getType()));
+        dto.setResidentOwnerId(entity.getResidentOwner().getId());
 
         return dto;
     }
 
-    public static Vehicle toEntity(VehicleDTO vehicleDTO, Resident residentOwner) {
+    @Override
+    public Vehicle toEntity(VehicleDTO dto) {
+        return null;
+    }
+
+    @Override
+    public Vehicle toEntity(VehicleDTO dto, Resident foreignEntity) {
         Vehicle entity = new Vehicle();
 
-        entity.setId(vehicleDTO.getId());
-        entity.setPlate(vehicleDTO.getPlate());
-        entity.setColor(vehicleDTO.getColor());
-        entity.setModel(vehicleDTO.getModel());
-        entity.setResidentOwner(residentOwner);
+        entity.setId(dto.getId());
+        entity.setPlate(dto.getPlate());
+        entity.setColor(dto.getColor());
+        entity.setModel(dto.getModel());
+        entity.setType(dto.getType().getValue());
+        entity.setResidentOwner(foreignEntity);
 
         return entity;
     }
